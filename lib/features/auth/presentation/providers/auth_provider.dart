@@ -15,12 +15,13 @@ class AuthNotifier extends StateNotifier<AuthState> {
 
   final AuthRepository authRepository;
 
-  void loginUser(String email, String password) async {
+  Future<void> loginUser(String email, String password) async {
     try {
       final user = await authRepository.login(email, password);
+
       _setLoggedUser(user);
-    } on WrongCredentials {
-      logout('Invalid credentials');
+    } on CustomError catch (e) {
+      logout(e.message);
     } catch (e) {
       logout('Error ');
     }
@@ -40,7 +41,10 @@ class AuthNotifier extends StateNotifier<AuthState> {
   }
 
   Future<void> logout([String? errorMessage]) async {
-    state.copyWith(authStatus: AuthStatus.notAuthenticated, user: null);
+    state = state.copyWith(
+        authStatus: AuthStatus.notAuthenticated,
+        user: null,
+        errorMessage: errorMessage);
     //TODO: clear token
   }
 }
