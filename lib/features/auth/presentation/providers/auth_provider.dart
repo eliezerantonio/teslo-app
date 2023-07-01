@@ -23,7 +23,7 @@ class AuthNotifier extends StateNotifier<AuthState> {
     } on CustomError catch (e) {
       logout(e.message);
     } catch (e) {
-      logout('Error ');
+      logout('Error: $e');
     }
 
     // state=state.copyWith(authStatus: AuthStatus.authenticated, user: user, errorMessage: ,);
@@ -34,8 +34,11 @@ class AuthNotifier extends StateNotifier<AuthState> {
   void checkAuthStatus() async {}
 
   void _setLoggedUser(UserEntity userEntity) {
-    state =
-        state.copyWith(user: userEntity, authStatus: AuthStatus.authenticated);
+    state = state.copyWith(
+      user: userEntity,
+      authStatus: AuthStatus.authenticated,
+      errorMessage: '',
+    );
 
     //TODO: save token
   }

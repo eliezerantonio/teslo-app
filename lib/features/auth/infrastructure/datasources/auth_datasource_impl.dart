@@ -26,8 +26,7 @@ class AuthDatasourceImpl extends AuthDataSource {
     } on DioException catch (e) {
       if (e.response?.statusCode == 401) {
         throw CustomError(
-          e.response?.data['message'] ?? 'Credencias inválidos',
-        );
+            e.response?.data['message'] ?? 'Credencias inválidos');
       }
 
       if (e.type == DioExceptionType.connectionTimeout) {
