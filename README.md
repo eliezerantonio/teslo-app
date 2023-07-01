@@ -1,6 +1,6 @@
 # Flutter - Authenticated CRUD App - TesloShop
 
-Este es un proyecto para trabajar con:
+Este é um projecto para trabalhar com:
 
 * Cámara
 * Tokens de acceso
@@ -9,10 +9,10 @@ Este es un proyecto para trabajar con:
 * GoRouter
 
 
-## El backend lo pueden obtener de aquí
+## backend 
 
 [Teslo Backend - Nest RestServer](https://hub.docker.com/repository/docker/klerith/flutter-backend-teslo-shop/general)
 
 # Importante
-Recuerden leer y seguir la guía para montar el backend localmente.
+Lembre de se guir as intruções para rodar seu backend localmente.
 
