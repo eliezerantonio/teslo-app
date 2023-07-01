@@ -2,7 +2,7 @@ import 'package:teslo_shop/features/products/domain/datasources/products_datasou
 import 'package:teslo_shop/features/products/domain/entities/product_entity.dart';
 import 'package:teslo_shop/features/products/domain/repositories/products_repositories.dart';
 
-class ProductsRepositoryImpl extends ProudctsRepositories {
+class ProductsRepositoryImpl extends ProductsRepository {
   final ProudctsDatasources datasources;
 
   ProductsRepositoryImpl(this.datasources);

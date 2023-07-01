@@ -4,7 +4,7 @@ import 'package:teslo_shop/features/products/domain/repositories/products_reposi
 import 'package:teslo_shop/features/products/infrastructure/datasources/products_datasource_impl.dart';
 import 'package:teslo_shop/features/products/infrastructure/repositories/products_repository_impl.dart';
 
-final productsRepositorProvider = Provider<ProudctsRepositories>((ref) {
+final productsRepositorProvider = Provider<ProductsRepository>((ref) {
   final accessToken = ref.watch(authProvider).user?.token ?? '';
 
   final productsRepository = ProductsRepositoryImpl(ProductsDatasourceImpl(accessToken: accessToken));

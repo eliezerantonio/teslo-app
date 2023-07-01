@@ -11,7 +11,7 @@ final productsProvider = StateNotifierProvider<ProductsNotifier, ProductsState>(
 });
 
 class ProductsNotifier extends StateNotifier<ProductsState> {
-  final ProudctsRepositories proudctsRepository;
+  final ProductsRepository proudctsRepository;
 
   ProductsNotifier(this.proudctsRepository) : super(ProductsState()) {
     loadNextPage();

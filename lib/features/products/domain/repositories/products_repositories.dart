@@ -1,6 +1,6 @@
 import '../entities/product_entity.dart';
 
-abstract class ProudctsRepositories {
+abstract class ProductsRepository {
   Future<List<ProductEntity>> getProudctByPage( {int limit = 10, int offset = 0});
 
   Future<ProductEntity> getProductById(String id);
