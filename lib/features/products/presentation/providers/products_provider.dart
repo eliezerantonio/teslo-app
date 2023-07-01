@@ -1,7 +1,14 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:teslo_shop/features/products/domain/entities/product_entity.dart';
+import 'package:teslo_shop/features/products/presentation/providers/products_repository_provider.dart';
 
 import '../../domain/repositories/products_repositories.dart';
+
+final productsProvider = StateNotifierProvider<ProductsNotifier, ProductsState>((ref) {
+  final productsRepository = ref.watch(productsRepositorProvider);
+
+  return ProductsNotifier(productsRepository);
+});
 
 class ProductsNotifier extends StateNotifier<ProductsState> {
   final ProudctsRepositories proudctsRepository;
