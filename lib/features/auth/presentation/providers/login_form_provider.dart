@@ -7,9 +7,7 @@ final loginFormProvider =
     StateNotifierProvider.autoDispose<LoginFormNotifier, LoginFormState>((ref) {
   final loginUserCallback = ref.watch(authProvider.notifier).loginUser;
 
-  return LoginFormNotifier(
-    loginUserCallback: loginUserCallback
-  );
+  return LoginFormNotifier(loginUserCallback: loginUserCallback);
 });
 
 class LoginFormState {
@@ -56,11 +54,10 @@ class LoginFormState {
 }
 
 class LoginFormNotifier extends StateNotifier<LoginFormState> {
-  LoginFormNotifier({
-    required this.loginUserCallback
-  }) : super(LoginFormState());
+  LoginFormNotifier({required this.loginUserCallback})
+      : super(LoginFormState());
 
-  final Function (String, String) loginUserCallback;
+  final Function(String, String) loginUserCallback;
 
   onEmailChange(String value) {
     final newEmail = Email.dirty(value);
@@ -80,13 +77,15 @@ class LoginFormNotifier extends StateNotifier<LoginFormState> {
     );
   }
 
-  onFormSubmit()  async{
+  onFormSubmit() async {
     _touchEveryField();
     if (!state.isValid) return;
 
+    state = state.copyWith(isPosting: true);
+
     await loginUserCallback(state.email.value, state.password.value);
 
-    
+    state = state.copyWith(isPosting: false);
   }
 
   _touchEveryField() {
