@@ -10,8 +10,30 @@ class AuthDatasourceImpl extends AuthDataSource {
   final dio = Dio(BaseOptions(baseUrl: Environment.apiUrl));
   @override
   Future<UserEntity> checkAuthStatus(String token) async {
-    // TODO: implement register
-    throw UnimplementedError();
+    try {
+      final response = await dio.get(
+        '/auth/check-status',
+        options: Options(headers: {
+          'Authorization': 'Bearer $token',
+        }),
+      );
+
+      final user = UserEntityMapper.userJsonToEntity(response.data);
+
+      return user;
+    } on DioException catch (e) {
+      if (e.response?.statusCode == 401) {
+        throw CustomError('Token is not authorized');
+      }
+
+      if (e.type == DioExceptionType.connectionTimeout) {
+        throw CustomError('Verificar conexão com a internet');
+      }
+
+      throw Exception('Algo errado Aconteçeu');
+    } catch (e) {
+      throw Exception('Algo errado Aconteçeu');
+    }
   }
 
   @override
