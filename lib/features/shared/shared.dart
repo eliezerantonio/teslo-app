@@ -1,4 +1,4 @@
 
 export 'widgets/widgets.dart';
 
-export './infrastrucuture/inputs.dart';
+export './infrastrucuture/inputs/inputs.dart';
