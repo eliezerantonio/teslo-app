@@ -9,7 +9,8 @@ import '../../../domain/entities/product_entity.dart';
 final productFormProvider = StateNotifierProvider.autoDispose
     .family<ProductFormNotifier, ProductFormState, ProductEntity>(
         (ref, product) {
-  final createUpdateCallback = ref.watch(productsProvider.notifier).createOrUpdateProduct;
+  final createUpdateCallback =
+      ref.watch(productsProvider.notifier).createOrUpdateProduct;
 
   return ProductFormNotifier(
       product: product, onSubmitCallback: createUpdateCallback);
@@ -43,7 +44,7 @@ class ProductFormNotifier extends StateNotifier<ProductFormState> {
     if (onSubmitCallback == null) return false;
 
     final productLike = {
-      "id": state.id,
+      "id": (state.id == 'new') ? null : state.id,
       "title": state.title.value,
       "price": state.price.value,
       "description": state.description,
@@ -61,9 +62,7 @@ class ProductFormNotifier extends StateNotifier<ProductFormState> {
     };
 
     try {
-    return  await onSubmitCallback!(productLike);
-
-  
+      return await onSubmitCallback!(productLike);
     } catch (e) {
       return false;
     }

@@ -22,25 +22,28 @@ class ProductScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productState = ref.watch(productProvider(productId));
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Editar product'),
-      ),
-      body: productState.isLoading
-          ? const FullScreenLoader()
-          : _ProductView(
-              product: productState.product!,
-            ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async {
-          if (productState.product == null) return;
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Editar product'),
+        ),
+        body: productState.isLoading
+            ? const FullScreenLoader()
+            : _ProductView(
+                product: productState.product!,
+              ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () async {
+            if (productState.product == null) return;
 
-          await ref
-              .read(productFormProvider(productState.product!).notifier)
-              .onFormSubmit()
-              .then((value) => showSnackbar(context));
-        },
-        child: const Icon(Icons.save_as_outlined),
+            await ref
+                .read(productFormProvider(productState.product!).notifier)
+                .onFormSubmit()
+                .then((value) => showSnackbar(context));
+          },
+          child: const Icon(Icons.save_as_outlined),
+        ),
       ),
     );
   }
@@ -184,6 +187,7 @@ class _SizeSelector extends StatelessWidget {
       }).toList(),
       selected: Set.from(selectedSizes),
       onSelectionChanged: (newSelection) {
+        FocusScope.of(context).unfocus();
         onSizeChanged(List.from(newSelection));
       },
       multiSelectionEnabled: true,
@@ -221,6 +225,7 @@ class _GenderSelector extends StatelessWidget {
         }).toList(),
         selected: {selectedGender},
         onSelectionChanged: (newSelection) {
+          FocusScope.of(context).unfocus();
           onGenderChanged(newSelection.first);
         },
       ),

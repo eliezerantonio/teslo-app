@@ -13,7 +13,7 @@ class ProductEntity {
   String gender;
   List<String> tags;
   List<String> images;
-  UserEntity user;
+  UserEntity? user;
 
   ProductEntity({
     required this.id,
@@ -26,6 +26,6 @@ class ProductEntity {
     required this.gender,
     required this.tags,
     required this.images,
-    required this.user,
+     this.user,
   });
 }

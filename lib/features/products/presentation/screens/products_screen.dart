@@ -23,9 +23,11 @@ class ProductsScreen extends StatelessWidget {
       ),
       body: const _ProductsView(),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text('Nuevo producto'),
+        label: const Text('Novo producto'),
         icon: const Icon(Icons.add),
-        onPressed: () {},
+        onPressed: () {
+          context.push('/product/new');
+        },
       ),
     );
   }
@@ -74,7 +76,7 @@ class _ProductsViewState extends ConsumerState {
           final product = productsState.products[index];
 
           return GestureDetector(
-            onTap: ()=>context.push('/product/${product.id}'),
+            onTap: () => context.push('/product/${product.id}'),
             child: ProductCard(product: product),
           );
         },
