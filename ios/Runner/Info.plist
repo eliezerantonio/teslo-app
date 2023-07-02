@@ -2,8 +2,22 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string> We need access the gallery to select photos </string>
+
+	<key>NSCameraUsageDescription</key>
+	<string> We need access the camera to make photos</string>
+
+
+	<key>NSMicrophoneUsageDescription</key>
+	<string> We need access the microphone case upload videos</string>
+
+
+
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+
+
 	<key>CFBundleDisplayName</key>
 	<string>Teslo Shop</string>
 	<key>CFBundleExecutable</key>
