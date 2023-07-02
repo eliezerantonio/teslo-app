@@ -1,14 +1,15 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:teslo_shop/features/products/domain/domain.dart';
 
 import 'products_repository_provider.dart';
 
 final productProvider = StateNotifierProvider.autoDispose.family<ProductNotifider, ProductState, String>((ref, productId) {
-
   final productsRepository = ref.watch(productsRepositorProvider);
 
-  return ProductNotifider(  productsRepository: productsRepository, productId: productId);
-  
+  return ProductNotifider(
+      productsRepository: productsRepository, productId: productId);
 });
 
 class ProductNotifider extends StateNotifier<ProductState> {
@@ -16,9 +17,20 @@ class ProductNotifider extends StateNotifier<ProductState> {
 
   ProductNotifider(
       {required this.productsRepository, required String productId})
-      : super(ProductState(id: productId));
+      : super(ProductState(id: productId)) {
+    loadProduct();
+  }
 
-  Future<void> loadProduct() async {}
+  Future<void> loadProduct() async {
+    try {
+      final product = await productsRepository.getProductById(state.id);
+
+      state = state.copyWith(isLoading: false, product: product);
+    } catch (e) {
+      //404
+      log(e.toString());
+    }
+  }
 }
 
 class ProductState {
