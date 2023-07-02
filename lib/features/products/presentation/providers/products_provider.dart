@@ -4,7 +4,8 @@ import 'package:teslo_shop/features/products/presentation/providers/products_rep
 
 import '../../domain/repositories/products_repositories.dart';
 
-final productsProvider = StateNotifierProvider<ProductsNotifier, ProductsState>((ref) {
+final productsProvider =
+    StateNotifierProvider<ProductsNotifier, ProductsState>((ref) {
   final productsRepository = ref.watch(productsRepositorProvider);
 
   return ProductsNotifier(productsRepository);
@@ -15,6 +16,28 @@ class ProductsNotifier extends StateNotifier<ProductsState> {
 
   ProductsNotifier(this.proudctsRepository) : super(ProductsState()) {
     loadNextPage();
+  }
+
+  Future<bool> createOrUpdateProduct(Map<String, dynamic> productLike) async {
+    try {
+
+      final product = await proudctsRepository.createUpdateProduct(productLike);
+
+      final isProductInList =  state.products.any((element) => element.id == product.id);
+
+      if (!isProductInList) {
+
+        state = state.copyWith(products: [...state.products, product]);
+
+        return true;
+
+      }
+
+      state=state.copyWith(products: state.products.map((element) => (element.id==product.id)? product:element).toList());
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 
   Future loadNextPage() async {
