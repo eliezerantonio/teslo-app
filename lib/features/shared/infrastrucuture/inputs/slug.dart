@@ -12,10 +12,11 @@ class Slug extends FormzInput<String, SlugError> {
   const Slug.dirty(String value) : super.dirty(value);
 
   String? get errorMessage {
+
     if (isValid || isPure) return null;
 
     if (displayError == SlugError.empty) return 'O campo é obrigatório';
-       if (displayError == SlugError.format) return 'O campo não tem o formato esperado';
+    if (displayError == SlugError.format) return 'O campo não tem o formato esperado';
 
     return null;
   }
