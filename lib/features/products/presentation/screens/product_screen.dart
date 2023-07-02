@@ -8,6 +8,17 @@ class ProductScreen extends ConsumerWidget {
   const ProductScreen(this.productId, {super.key});
   final String productId;
 
+  void showSnackbar(BuildContext context) {
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        content: Text(
+          'Novo Producto Atualizado',
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final productState = ref.watch(productProvider(productId));
@@ -21,12 +32,13 @@ class ProductScreen extends ConsumerWidget {
               product: productState.product!,
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
+        onPressed: () async {
           if (productState.product == null) return;
 
-          ref
+          await ref
               .read(productFormProvider(productState.product!).notifier)
-              .onFormSubmit();
+              .onFormSubmit()
+              .then((value) => showSnackbar(context));
         },
         child: const Icon(Icons.save_as_outlined),
       ),
@@ -87,7 +99,8 @@ class _ProductInformation extends ConsumerWidget {
           CustomProductField(
             label: 'Slug',
             initialValue: productForm.slug.value,
-            onChanged: ref.read(productFormProvider(product).notifier).onSlugChanged,
+            onChanged:
+                ref.read(productFormProvider(product).notifier).onSlugChanged,
             errorMessage: productForm.slug.errorMessage,
           ),
           CustomProductField(
